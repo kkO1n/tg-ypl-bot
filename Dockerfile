@@ -13,4 +13,5 @@ RUN pip install --no-cache-dir -U -r requirements.txt
 
 COPY bot.py .
 
-CMD ["python", "bot.py"]
+# Every start pulls the latest yt-dlp, so a restart is all an update takes.
+CMD ["sh", "-c", "pip install -q --no-cache-dir --root-user-action=ignore -U 'yt-dlp[default]'; exec python bot.py"]

@@ -29,14 +29,27 @@ an answer. Everyone else is ignored.
 3. If the codec is not H.264, `to_h264` re-encodes it so Telegram plays it inline.
 4. The bot replies with the video and deletes the temporary files.
 
-## Troubleshooting
+## Keeping yt-dlp fresh
 
-**Downloads start failing.** The sites change often and yt-dlp follows. Rebuild
-to pick up the latest release:
+The sites change often and yt-dlp follows. The container installs the latest
+yt-dlp every time it starts, so a restart is an update. Schedule one, for
+example daily at 05:00 in `/etc/cron.d/tg-ypl-bot`:
+
+```
+0 5 * * * root docker restart tg-ypl-bot
+```
+
+## Without Docker Compose
 
 ```sh
-docker compose build --no-cache && docker compose up -d
+docker build -t tg-ypl-bot .
+docker run -d --name tg-ypl-bot --restart unless-stopped \
+  --network host --env-file .env tg-ypl-bot
 ```
+
+## Troubleshooting
+
+**Downloads start failing.** Restart the container to get the latest yt-dlp.
 
 **"Sign in to confirm you're not a bot".** YouTube and Instagram sometimes demand
 a login, mostly on server IPs. Export a Netscape-format cookies file from a
@@ -50,3 +63,7 @@ path.
 ```sh
 ruff format . && ruff check .
 ```
+
+## License
+
+[MIT](LICENSE)

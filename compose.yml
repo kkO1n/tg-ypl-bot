@@ -1,6 +1,7 @@
 services:
   bot:
     build: .
+    container_name: tg-ypl-bot
     env_file: .env
     restart: unless-stopped
     # The bot only makes outbound calls, so it needs no network of its own.
