@@ -1,0 +1,4 @@
+.env
+.git
+cookies.txt
+__pycache__/

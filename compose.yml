@@ -1,0 +1,7 @@
+services:
+  bot:
+    build: .
+    env_file: .env
+    restart: unless-stopped
+    # The bot only makes outbound calls, so it needs no network of its own.
+    network_mode: host
